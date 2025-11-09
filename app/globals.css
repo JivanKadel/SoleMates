@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
+/* 
+This design is derived from undisclosed design sources.
+
+Typography
+Primary Font: Inter
+Headings (H1, H2, H3): Bold, Weight 700
+Body Text (Paragraphs): Regular, Weight 400
+Buttons & Links: Medium, Weight 500
+Color Palette
+
+Light Mode:
+
+Primary Background: #FFFFFF (White)
+Secondary Background (for cards/sections): #F7F7F7 (Light Gray)
+Primary Text: #111827 (Almost Black)
+Secondary Text (for less important info): #6B7280 (Gray)
+Accent/Primary Action Color: #007AFF (Bright Blue)
+Accent Text: #FFFFFF (White)
+
+Dark Mode:
+
+Primary Background: #121212 (Dark Charcoal)
+Secondary Background (for cards/sections): #1E1E1E (Slightly Lighter Gray)
+Primary Text: #E5E7EB (Light Gray)
+Secondary Text (for less important info): #9CA3AF (Muted Gray)
+Accent/Primary Action Color: #0A84FF (Slightly Brighter Blue for contrast)
+Accent Text: #FFFFFF (White)
+
+Borders
+Color (Light Mode): #E5E7EB (Light Gray)
+Color (Dark Mode): #374151 (Dark Gray)
+Width: 1px
+
+Radius (for rounded corners on cards/buttons): 8px
+Shadows (for cards and elevated elements)
+Style: A soft, subtle shadow to create depth.
+Offset: 0px horizontal, 4px vertical
+Blur: 12px
+Spread: 0px
+Color (Light Mode): rgba(0, 0, 0, 0.05)
+Color (Dark Mode): rgba(0, 0, 0, 0.25) 
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --accent: #007aff;
+  --accent-text: #ffffff;
+
+  --border-color: #e5e7eb;
+  --border-width: 1px;
+  --radius: 8px;
+  --shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.05);
+
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+    "Segoe UI Mono", "Helvetica Neue", monospace;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --accent: #0a84ff;
+    --accent-text: #ffffff;
+
+    --border-color: #374151;
+    --shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
+
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
   }
+}
+
+/* class-based dark mode  */
+html.dark {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --accent: #0a84ff;
+  --accent-text: #ffffff;
+
+  --border-color: #374151;
+  --shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
+
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
