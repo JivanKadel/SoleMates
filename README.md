@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Solemates
 
-## Getting Started
+Solemates - where you find your perfect shoes.
 
-First, run the development server:
+This is an Ecommerce site built with Next.js (TS), Tailwind CSS.
+
+## Download or Clone
+
+- Download the repository as a ZIP from GitHub and extract it, or
+
+- Clone the repo:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+
+cd <repo-folder>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Install dependencies using your preferred package manager:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# npm
+npm install
 
-## Learn More
+# yarn
+yarn install
 
-To learn more about Next.js, take a look at the following resources:
+# pnpm
+pnpm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Run (development)
 
-## Deploy on Vercel
+Start the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# npm
+npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# yarn
+yarn dev
+
+# pnpm
+pnpm dev
+```
+
+Open http://localhost:3000 in your browser.
+
+## Build and Run (production)
+
+Build and start the production server:
+
+```bash
+# build
+npm run build
+
+# start
+npm start
+```
+
+(Or use the equivalent yarn/pnpm commands.)
+
+## Environment
+
+If the project requires environment variables, create a `.env.local` file at the project root and add required keys (API credentials, payment keys, etc.). Example:
+
+```
+NEXT_PUBLIC_API_URL=VALUE
+```
+
+## Deploy
+
+The app is ready to deploy to platforms like Vercel, Netlify, Cloudflare, Fly.io or any node hosting that supports Next.js. See Next.js deployment docs for platform-specific details.
+
+## Notes
+
+- Edit pages in the `app/` (or `pages/`) directory and components in `components/`.
+
+- Static assets go in `public/`.
+
+- Run tests or linting with the scripts defined in `package.json` (if provided).
