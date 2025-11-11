@@ -43,12 +43,17 @@ Color (Light Mode): rgba(0, 0, 0, 0.05)
 Color (Dark Mode): rgba(0, 0, 0, 0.25) 
 */
 
+/* =========================================
+   🌞 Base light mode variables
+   ========================================= */
 :root {
   --bg-primary: #ffffff;
   --bg-secondary: #f7f7f7;
+  --bg-accent: #007aff;
   --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --accent: #007aff;
+  --text-secondary: #4c669a;
+  --text-muted: #6b7280;
+  --accent: #006fe5;
   --accent-text: #ffffff;
 
   --border-color: #e5e7eb;
@@ -63,22 +68,27 @@ Color (Dark Mode): rgba(0, 0, 0, 0.25)
     Roboto, "Helvetica Neue", Arial;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
     "Segoe UI Mono", "Helvetica Neue", monospace;
+
+  /* Animation */
+  @keyframes marquee {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-}
-
+/* Dark mode in system / browser */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-primary: #121212;
     --bg-secondary: #1e1e1e;
     --text-primary: #e5e7eb;
-    --text-secondary: #9ca3af;
-    --accent: #0a84ff;
+    --text-muted: #9ca3af;
+    --text-secondary: #4c669a;
+    --accent: #022d82;
     --accent-text: #ffffff;
 
     --border-color: #374151;
@@ -89,13 +99,14 @@ Color (Dark Mode): rgba(0, 0, 0, 0.25)
   }
 }
 
-/* class-based dark mode  */
+/* For dark mode toggle */
 html.dark {
   --bg-primary: #121212;
   --bg-secondary: #1e1e1e;
   --text-primary: #e5e7eb;
-  --text-secondary: #9ca3af;
-  --accent: #0a84ff;
+  --text-secondary: #175fdc;
+  --text-muted: #c0c9d9;
+  --accent: #135bec;
   --accent-text: #ffffff;
 
   --border-color: #374151;
@@ -105,8 +116,48 @@ html.dark {
   --foreground: var(--text-primary);
 }
 
+@theme {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-surface: var(--bg-secondary);
+  --color-muted: var(--text-muted);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-text);
+
+  --color-border: var(--border-color);
+
+  /* Shadows, borders, radius */
+  --border-DEFAULT: var(--border-width);
+  --radius-DEFAULT: var(--radius);
+  --shadow-card: var(--shadow);
+
+  /* Fonts */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* Animations */
+  --animate-marquee: marquee 60s linear infinite;
+  --animate-marquee-slow: marquee 70s linear infinite;
+  --animate-marquee-slowest: marquee 90s linear infinite;
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+.animate-marquee {
+  animation: marquee 10s linear infinite;
+  float: left;
 }
