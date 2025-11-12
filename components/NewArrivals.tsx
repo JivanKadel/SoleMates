@@ -1,4 +1,3 @@
-import { Shoe } from "@/data/shoes";
 import NewArrivalCard from "./NewArrivalCard";
 import { getNewArrivals } from "@/utils/dataFilter";
 

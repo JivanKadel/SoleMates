@@ -16,12 +16,12 @@ export default function Header() {
     <header className="w-full sticky top-0 z-20 flex flex-row items-center justify-center bg-white/95 dark:bg-black/95 backdrop:blur-sm border-b border-gray-200">
       <div className="flex items-center justify-between whitespace-nowrap px-4 sm:px-8 py-3 w-full max-w-7xl">
         <div className="flex flex-row gap-8">
-          <div className="flex flex-row gap-1.5">
+          <Link href="/" className="flex flex-row gap-1.5">
             <Image src={LogoImage} width={24} height={24} alt="SoleMate Logo" />
             <h1 className="text-xl font-bold leading-tight tracking-[-0.015em]">
               SoleMate
             </h1>
-          </div>
+          </Link>
           <nav className="hidden md:flex flex-row items-center gap-8">
             {pageLinks.map((link) => {
               return (

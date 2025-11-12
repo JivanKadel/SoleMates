@@ -200,7 +200,7 @@ const shoes: Shoe[] = [
     sizes: [7, 8, 9],
     totalSales: 2980,
     rating: 4.4,
-    gender: "men",
+    gender: "women",
     tags: ["sale,", "bestseller"],
     reviews: [
       {
@@ -229,7 +229,7 @@ const shoes: Shoe[] = [
     sizes: [6, 7, 8, 9],
     totalSales: 1500,
     rating: 4.0,
-    gender: "men",
+    gender: "women",
     tags: ["sale,", "bestseller"],
     reviews: [
       {
@@ -613,7 +613,7 @@ const shoes: Shoe[] = [
     sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
-    gender: "men",
+    gender: "women",
     tags: ["sale,", "new"],
     reviews: [
       {
@@ -642,7 +642,7 @@ const shoes: Shoe[] = [
     sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
-    gender: "men",
+    gender: "women",
     tags: ["new,", "bestseller"],
     reviews: [
       {

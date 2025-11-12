@@ -40,7 +40,7 @@ export default async function Home() {
                   any adventure.
                 </h3>
                 <Link
-                  href={"/shop"}
+                  href={"/explore"}
                   className="bg-accent text-xl text-white font-mono font-extrabold self-center px-4 py-3 rounded-md"
                 >
                   Shop New Arrivals

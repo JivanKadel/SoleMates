@@ -14,3 +14,9 @@ export async function getRandomShoe(): Promise<Shoe | undefined> {
   }
   return newArrivals[0];
 }
+
+export async function getShoeById(id: string) {
+  console.log(id);
+  const shoe = shoes.find((shoe) => shoe.id === id);
+  return shoe ? shoe : null;
+}

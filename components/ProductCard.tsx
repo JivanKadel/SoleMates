@@ -1,4 +1,5 @@
 import { Shoe } from "@/data/shoes";
+import Link from "next/link";
 import React from "react";
 
 export default function ProductCard({ shoe }: { shoe: Shoe }) {
@@ -25,7 +26,13 @@ export default function ProductCard({ shoe }: { shoe: Shoe }) {
       </div>
 
       <div>
-        <p className="text-base font-medium leading-normal">{shoe.name}</p>
+        <Link
+          href={`/explore/${shoe.id}`}
+          className="text-base font-medium leading-normal block hover:underline"
+          aria-label={`View ${shoe.name}`}
+        >
+          {shoe.name}
+        </Link>
         <p className="text-sm font-normal leading-normal text-subtext-light dark:text-subtext-dark">
           Rs. {shoe.price}
         </p>

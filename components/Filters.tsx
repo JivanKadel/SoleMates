@@ -2,6 +2,7 @@
 import { filterOptions } from "@/data/shoes";
 import { useEffect, useState } from "react";
 import RangeSlider from "./RangeSlider";
+import SizeFilters from "./SizeFilters";
 
 export default function Filters() {
   const [range, setRange] = useState<{ min: number; max: number }>({
@@ -53,16 +54,7 @@ export default function Filters() {
               Size (US) <span>{}</span>
             </h3>
             <div className="grid grid-cols-4 gap-2 text-center">
-              {filterOptions.size.map((size, index) => {
-                return (
-                  <button
-                    key={index}
-                    className={`p-2 rounded-md border-2 border-black/10 dark:border-white/10 text-xs font-medium hover:border-accent cursor-pointer`}
-                  >
-                    {size}
-                  </button>
-                );
-              })}
+              <SizeFilters />
             </div>
           </div>
           <div className="flex flex-col gap-3">
