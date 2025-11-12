@@ -6,6 +6,11 @@ export type ShoeReview = {
   date?: string; // ISO date
 };
 
+export const filterOptions = {
+  gender: ["men", "women", "unisex"],
+  size: [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5],
+};
+
 export type Shoe = {
   id: string;
   name: string;
@@ -13,11 +18,13 @@ export type Shoe = {
   price: number;
   colors: string[];
   image: string;
-  sizes: number[]; // US sizes
+  sizes: number[];
   totalSales: number;
   newArrival?: boolean;
   rating: number; // average 1-5
   reviews: ShoeReview[];
+  gender: "men" | "women" | "unisex";
+  tags?: string[];
 };
 
 const shoes: Shoe[] = [
@@ -28,10 +35,12 @@ const shoes: Shoe[] = [
     price: 2100,
     colors: ["LightBlue", "White"],
     image: "/images/shoes/aero_glide_sneaker.png",
-    sizes: [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 11, 12],
+    sizes: [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5],
     totalSales: 12450,
     rating: 4.5,
     newArrival: true,
+    gender: "unisex",
+    tags: ["new,", "bestseller"],
     reviews: [
       {
         id: "r001",
@@ -62,10 +71,12 @@ const shoes: Shoe[] = [
     brand: "Adidas",
     price: 2300,
     colors: ["red"],
-    image: "/images/shoes/air_jordan_12_red.png",
-    sizes: [5, 6, 7, 8, 9, 10, 11, 12, 13],
+    image: "/images/shoes/air_jordan_12_red.jpg",
+    sizes: [6, 7, 8, 9],
     totalSales: 9870,
     rating: 4.6,
+    gender: "men",
+    tags: ["new", "sale"],
     reviews: [
       {
         id: "r004",
@@ -89,10 +100,12 @@ const shoes: Shoe[] = [
     brand: "Vans",
     price: 3000,
     colors: ["gray", "white"],
-    image: "/images/shoes/air_jordan_gray.png",
-    sizes: [4, 5, 6, 7, 8, 9, 10, 11],
+    image: "/images/shoes/air_jordan_gray.jpg",
+    sizes: [6, 7, 8, 9],
     totalSales: 15400,
     rating: 4.3,
+    gender: "unisex",
+    tags: ["new", "sale"],
     reviews: [
       {
         id: "r006",
@@ -124,10 +137,12 @@ const shoes: Shoe[] = [
     price: 1500,
     colors: ["black"],
     image: "/images/shoes/cloud_runner.png",
-    sizes: [6, 7, 8, 9, 10, 11, 12],
+    sizes: [6, 7, 8, 9],
     totalSales: 6320,
     rating: 4.2,
     newArrival: true,
+    gender: "men",
+    tags: ["new,", "bestseller"],
     reviews: [
       {
         id: "r009",
@@ -152,10 +167,12 @@ const shoes: Shoe[] = [
     price: 4000,
     colors: ["crimson"],
     image: "/images/shoes/crimson_stiletto.png",
-    sizes: [7, 8, 8.5, 9, 10, 11],
+    sizes: [7, 8, 8.5, 9],
     totalSales: 3810,
     rating: 4.1,
     newArrival: true,
+    gender: "women",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r011",
@@ -180,9 +197,11 @@ const shoes: Shoe[] = [
     price: 3000,
     colors: ["black"],
     image: "images/shoes/nike_air_force_1_black.jpg",
-    sizes: [7, 8, 9, 10, 11, 12],
+    sizes: [7, 8, 9],
     totalSales: 2980,
     rating: 4.4,
+    gender: "men",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r013",
@@ -207,9 +226,11 @@ const shoes: Shoe[] = [
     price: 5500,
     colors: ["white"],
     image: "/images/shoes/nike_air_force_1_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12],
+    sizes: [6, 7, 8, 9],
     totalSales: 1500,
     rating: 4.0,
+    gender: "men",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r015",
@@ -234,9 +255,11 @@ const shoes: Shoe[] = [
     price: 1700,
     colors: ["black"],
     image: "/images/shoes/nike_air_max_1_green_white.jpg",
-    sizes: [5, 6, 7, 8, 9, 10, 11],
+    sizes: [6, 7, 8, 9],
     totalSales: 2040,
     rating: 4.3,
+    gender: "men",
+    tags: ["sale,", "new"],
     reviews: [
       {
         id: "r017",
@@ -261,9 +284,11 @@ const shoes: Shoe[] = [
     price: 1950,
     colors: ["mint"],
     image: "/images/shoes/nike_athletic_black_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12],
+    sizes: [6, 7, 8, 9],
     totalSales: 4100,
     rating: 4.0,
+    gender: "unisex",
+    tags: ["new,", "bestseller"],
     reviews: [
       {
         id: "r019",
@@ -288,9 +313,11 @@ const shoes: Shoe[] = [
     price: 2100,
     colors: ["green"],
     image: "/images/shoes/nike_athletic_green_black.jpg",
-    sizes: [7, 8, 8.5, 9, 9.5, 10, 11, 12],
+    sizes: [7, 8, 8.5, 9, 9.5],
     totalSales: 7230,
     rating: 4.7,
+    gender: "men",
+    tags: ["new,", "bestseller"],
     reviews: [
       {
         id: "r021",
@@ -322,9 +349,11 @@ const shoes: Shoe[] = [
     price: 3900,
     colors: ["red"],
     image: "/images/shoes/nike_athletic_red_white.jpg",
-    sizes: [5, 6, 7, 8, 9, 10, 11, 12],
+    sizes: [6, 7, 8, 9],
     totalSales: 11200,
     rating: 4.2,
+    gender: "women",
+    tags: ["sale,", "new"],
     reviews: [
       {
         id: "r024",
@@ -349,9 +378,11 @@ const shoes: Shoe[] = [
     price: 4400,
     colors: ["red", "white"],
     image: "/images/shoes/nike_casual_red_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "unisex",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -376,9 +407,11 @@ const shoes: Shoe[] = [
     price: 2000,
     colors: ["black"],
     image: "/images/shoes/nike_runner_black_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "men",
+    tags: ["sale,", "new"],
     reviews: [
       {
         id: "r026",
@@ -403,9 +436,11 @@ const shoes: Shoe[] = [
     price: 3200,
     colors: ["blue", "mix"],
     image: "/images/shoes/pleaser_blue_funky.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "unisex",
+    tags: ["new,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -430,9 +465,11 @@ const shoes: Shoe[] = [
     price: 5000,
     colors: ["white", "black"],
     image: "/images/shoes/pleaser_casual_black_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "women",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -457,9 +494,11 @@ const shoes: Shoe[] = [
     price: 2700,
     colors: ["gray"],
     image: "/images/shoes/pleaser_gray_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "men",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -484,9 +523,11 @@ const shoes: Shoe[] = [
     price: 3750,
     colors: ["maroon"],
     image: "/images/shoes/plimsoll_maroon.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "men",
+    tags: ["new,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -511,9 +552,11 @@ const shoes: Shoe[] = [
     price: 5100,
     colors: ["white", "black"],
     image: "/images/shoes/puma_athlete_black_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "unisex",
+    tags: ["sale,", "new"],
     reviews: [
       {
         id: "r026",
@@ -538,9 +581,11 @@ const shoes: Shoe[] = [
     price: 2500,
     colors: ["white"],
     image: "/images/shoes/puma_casual_white.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "women",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -565,9 +610,11 @@ const shoes: Shoe[] = [
     price: 3600,
     colors: ["black"],
     image: "/images/shoes/puma_runner_black.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "men",
+    tags: ["sale,", "new"],
     reviews: [
       {
         id: "r026",
@@ -592,9 +639,11 @@ const shoes: Shoe[] = [
     price: 3900,
     colors: ["brown"],
     image: "/images/shoes/puma_brown.jpg",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
+    gender: "men",
+    tags: ["new,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -619,10 +668,12 @@ const shoes: Shoe[] = [
     price: 5500,
     colors: ["brown", "red"],
     image: "/images/shoes/sunset_sandal.png",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
     newArrival: true,
+    gender: "women",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r026",
@@ -647,10 +698,12 @@ const shoes: Shoe[] = [
     price: 6000,
     colors: ["darkblue", "white", "black"],
     image: "/images/shoes/urban_walker.png",
-    sizes: [6, 7, 8, 9, 10, 11, 12, 13],
+    sizes: [6, 7, 8, 9],
     totalSales: 5580,
     rating: 4.6,
     newArrival: true,
+    gender: "unisex",
+    tags: ["sale,", "bestseller"],
     reviews: [
       {
         id: "r026",

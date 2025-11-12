@@ -161,3 +161,47 @@ body {
   animation: marquee 10s linear infinite;
   float: left;
 }
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #ddd;
+  height: 8px;
+}
+
+/* For Firefox */
+input[type="range"]::-moz-range-track {
+  background: #ddd;
+  height: 8px;
+}
+
+/* For Internet Explorer */
+input[type="range"]::-ms-track {
+  background: #ddd;
+  height: 8px;
+}
+
+/* For WebKit browsers */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #007bff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-top: -8px;
+}
+
+/* For Firefox */
+input[type="range"]::-moz-range-thumb {
+  background: #007bff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+/* For Internet Explorer */
+input[type="range"]::-ms-thumb {
+  background: #007bff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}

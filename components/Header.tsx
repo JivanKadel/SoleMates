@@ -13,7 +13,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="w-full sticky flex flex-row items-center justify-center border-b border-gray-200">
+    <header className="w-full sticky top-0 z-20 flex flex-row items-center justify-center bg-white/95 dark:bg-black/95 backdrop:blur-sm border-b border-gray-200">
       <div className="flex items-center justify-between whitespace-nowrap px-4 sm:px-8 py-3 w-full max-w-7xl">
         <div className="flex flex-row gap-8">
           <div className="flex flex-row gap-1.5">
@@ -22,7 +22,7 @@ export default function Header() {
               SoleMate
             </h1>
           </div>
-          <nav className="flex flex-row items-center gap-8">
+          <nav className="hidden md:flex flex-row items-center gap-8">
             {pageLinks.map((link) => {
               return (
                 <Link

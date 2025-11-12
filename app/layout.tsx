@@ -21,7 +21,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico"></link>
       </head>
-      <body className={`antialiased`}>
+      <body className={`antialiased bg-white/5 dark:black/5 text-foreground`}>
         <Header />
         {children}
       </body>
