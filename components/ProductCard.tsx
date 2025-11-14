@@ -1,14 +1,13 @@
 "use client";
-import { ShoeContext } from "@/contexts/ShoeContext";
+import { useShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
 import Link from "next/link";
-import React, { useContext } from "react";
 
 export default function ProductCard({ shoe }: { shoe: Shoe }) {
   const ratingString = `${shoe.rating}`;
   const salesString = `${shoe.totalSales}`;
 
-  const { state, dispatch } = useContext(ShoeContext);
+  const { dispatch } = useShoeContext();
 
   return (
     <div className="flex flex-col">

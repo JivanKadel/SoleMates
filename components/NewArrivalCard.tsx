@@ -1,15 +1,14 @@
 "use client";
-import { ShoeContext } from "@/contexts/ShoeContext";
+import { useShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
 import Image from "next/image.js";
 import Link from "next/link.js";
-import { useContext } from "react";
 
 type ShoeProps = {
   shoe: Shoe;
 };
 export default function NewArrivalCard({ shoe }: ShoeProps) {
-  const { dispatch } = useContext(ShoeContext);
+  const { dispatch } = useShoeContext();
 
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-background-light dark:bg-background-dark border border-black/10 dark:border-white/10 min-w-64 transition-shadow hover:shadow-xl">

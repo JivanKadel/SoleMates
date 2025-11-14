@@ -1,10 +1,9 @@
-import { ShoeContext } from "@/contexts/ShoeContext";
+import { useShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
-import { useContext } from "react";
 import type { CartItem as CartItemType } from "@/contexts/ShoeContext";
 
 export default function CartItem({ shoe }: { shoe: Shoe }) {
-  const { state } = useContext(ShoeContext);
+  const { state } = useShoeContext();
 
   return (
     <div className="flex gap-4 p-4 justify-between items-center">

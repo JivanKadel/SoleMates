@@ -4,9 +4,11 @@ import LogoImage from "@/public/logo.svg";
 import Link from "next/link.js";
 import { useContext } from "react";
 import { CartDrawerContext } from "@/contexts/DrawerContext";
+import { useShoeContext } from "@/contexts/ShoeContext";
 
 export default function Header() {
-  const { isOpen, toggleOpen } = useContext(CartDrawerContext);
+  const { toggleOpen } = useContext(CartDrawerContext);
+  const { state } = useShoeContext();
 
   type PageLink = { id: number; linkText: string; linkTo: string };
 
