@@ -205,3 +205,12 @@ input[type="range"]::-ms-thumb {
   height: 24px;
   border-radius: 50%;
 }
+
+/* aside[role="dialog"] {
+  transform: translateX(100%);
+  transition: transform 0.8s ease-in-out;
+}
+
+aside.show {
+  transform: translateX(0);
+} */

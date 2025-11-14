@@ -1,18 +1,15 @@
 "use client";
-import { Shoe } from "@/data/shoes";
+
 import CartItemList from "./CartItemList";
 import Drawer from "./Drawer";
-import { useState } from "react";
+import { useContext } from "react";
+import { CartDrawerContext } from "@/contexts/DrawerContext";
 
 export default function CartDrawer() {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const { isOpen, onClose } = useContext(CartDrawerContext);
 
   return (
-    <Drawer
-      isOpen={dialogOpen}
-      onClose={() => setDialogOpen(false)}
-      labelledBy="Cart Items"
-    >
+    <Drawer isOpen={isOpen} onClose={onClose} labelledBy="Cart Items">
       <CartItemList />
     </Drawer>
   );

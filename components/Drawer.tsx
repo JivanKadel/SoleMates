@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface DrawerProps {
@@ -17,32 +17,73 @@ export default function Drawer({
 }: DrawerProps) {
   const drawerRef = useRef<HTMLElement>(null);
 
+  const [isMounted, setIsMounted] = useState(false);
+  const [isAnimated, setIsAnimated] = useState(false);
+
+  // Handle mount/unmount with animation
   useEffect(() => {
-    const handleEscapeKeyDown = (e: KeyboardEvent) => {
+    if (isOpen) {
+      setIsMounted(true);
+
+      // Double RAF ensures portal DOM is fully mounted before animation runs
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsAnimated(true);
+        });
+      });
+    } else {
+      setIsAnimated(false);
+
+      const timeout = setTimeout(() => {
+        setIsMounted(false);
+      }, 300);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpen]);
+
+  // Prevent scroll + ESC
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const body = document.body;
+    const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscapeKeyDown);
-      drawerRef.current?.focus();
-    }
-    return () => document.removeEventListener("keydown", handleEscapeKeyDown);
-  }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+    body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      body.style.overflow = "";
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isMounted, onClose]);
+
+  if (!isMounted) return null;
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex justify-end">
+      {/* BACKDROP */}
       <div
-        className="fixed inset-0 bg-black/50"
+        className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ${
+          isAnimated ? "opacity-100" : "opacity-0"
+        }`}
         onClick={onClose}
-        aria-hidden="true"
       ></div>
+
+      {/* DRAWER */}
       <aside
-        className="relative w-full max-w-md h-full bg-white dark:bg-black shadow-xl transform transition-transform duration-300 ease-in-out translate-x-0"
         ref={drawerRef}
-        aria-labelledby={labelledBy}
         role="dialog"
-        aria-modal={"true"}
+        aria-modal="true"
+        aria-labelledby={labelledBy}
+        tabIndex={-1}
+        className={`
+          relative w-full max-w-md h-full bg-white dark:bg-black shadow-xl 
+          transform transition-transform duration-300 ease-in-out
+          ${isAnimated ? "translate-x-0" : "translate-x-full"}
+        `}
       >
         <button
           type="button"
@@ -54,6 +95,7 @@ export default function Drawer({
             close
           </span>
         </button>
+
         {children}
       </aside>
     </div>,

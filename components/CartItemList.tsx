@@ -1,9 +1,29 @@
 import { Shoe } from "@/data/shoes";
+import { useContext, useEffect, useState } from "react";
+import {
+  CartItem as CartItemType,
+  useShoeContext,
+} from "@/contexts/ShoeContext";
 import CartItem from "./CartItem";
-import { useState } from "react";
 
 export default function CartItemList() {
-  const [cartItems, setCartItems] = useState<Shoe[]>();
+  const { state, dispatch } = useShoeContext();
+  const {
+    cartItems,
+  }: {
+    cartItems: CartItemType[];
+  } = state;
+
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const sum = cartItems.reduce(
+      (acc: number, item: CartItemType) =>
+        acc + item?.shoe?.price * item?.quantity,
+      0
+    );
+    setTotal(sum);
+  }, [cartItems]);
   return (
     <aside className="w-full max-w-md h-screen bg-background-light dark:bg-background-dark border-l border-gray-200 dark:border-gray-800 flex flex-col shadow-2xl">
       <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800 shrink-0">
@@ -25,7 +45,9 @@ export default function CartItemList() {
       <div className="flex-1 min-h-0 overflow-y-auto p-2">
         <div className="flex flex-col divide-y divide-gray-200 dark:divide-gray-800">
           {cartItems && cartItems?.length > 0 ? (
-            cartItems?.map((shoe) => <CartItem key={shoe.id} shoe={shoe} />)
+            cartItems?.map((item) => (
+              <CartItem key={item.shoe.id} shoe={item.shoe} />
+            ))
           ) : (
             <h1>Nothing in Cart Yet</h1>
           )}
@@ -39,10 +61,10 @@ export default function CartItemList() {
               Subtotal
             </p>
             <p className="text-xl font-bold text-gray-900 dark:text-white">
-              $404.49
+              Rs. {total}
             </p>
           </div>
-          <button className="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-primary text-white text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
+          <button className="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-accent text-white text-base font-bold leading-normal tracking-wide hover:bg-primary/90 transition-colors">
             <span className="truncate">Checkout</span>
           </button>
         </div>

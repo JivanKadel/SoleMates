@@ -5,12 +5,14 @@ interface DrawerContextProps {
   isOpen: boolean;
   onOpen: () => unknown;
   onClose: () => unknown;
+  toggleOpen: () => unknown;
 }
 
 export const CartDrawerContext = createContext<DrawerContextProps>({
   isOpen: false,
   onOpen: () => {},
   onClose: () => {},
+  toggleOpen: () => {},
 });
 
 export const CardDrawerContextProvider = ({
@@ -22,6 +24,7 @@ export const CardDrawerContextProvider = ({
 
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
+  const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
     <CartDrawerContext.Provider
@@ -29,6 +32,7 @@ export const CardDrawerContextProvider = ({
         isOpen,
         onOpen,
         onClose,
+        toggleOpen,
       }}
     >
       {children}

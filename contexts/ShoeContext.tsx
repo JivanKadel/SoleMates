@@ -2,8 +2,13 @@
 import React, { createContext, useContext, useReducer } from "react";
 import { Shoe } from "@/data/shoes";
 
-interface ShoeState {
-  cartItems: Shoe[];
+export interface CartItem {
+  shoe: Shoe;
+  quantity: number;
+}
+
+export interface ShoeState {
+  cartItems: CartItem[];
   favoriteItems: Shoe[];
 }
 
@@ -23,23 +28,62 @@ export const shoeReducer = (
   action: ShoeAction
 ): ShoeState => {
   switch (action.type) {
-    case "ADD_TO_CART":
+    case "ADD_TO_CART": {
+      const shoe = action.payload;
+
+      // check if shoe already exists
+      const existing = state.cartItems.find((item) => item.shoe.id === shoe.id);
+
+      if (existing) {
+        // increment quantity
+        return {
+          ...state,
+          cartItems: state.cartItems.map((item) =>
+            item.shoe.id === shoe.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+        };
+      }
+
+      // add new cart item
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload],
+        cartItems: [...state.cartItems, { shoe, quantity: 1 }],
       };
-    case "REMOVE_FROM_CART":
+    }
+
+    case "REMOVE_FROM_CART": {
+      const id = action.payload.id;
+
+      const existing = state.cartItems.find((item) => item.shoe.id === id);
+      if (!existing) return state;
+
+      if (existing.quantity > 1) {
+        // reduce quantity
+        return {
+          ...state,
+          cartItems: state.cartItems.map((item) =>
+            item.shoe.id === id
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          ),
+        };
+      }
+
+      // remove completely if quantity hits 0
       return {
         ...state,
-        cartItems: state.cartItems.filter(
-          (item) => item.id !== action.payload.id
-        ),
+        cartItems: state.cartItems.filter((item) => item.shoe.id !== id),
       };
+    }
+
     case "ADD_TO_FAVORITES":
       return {
         ...state,
         favoriteItems: [...state.favoriteItems, action.payload],
       };
+
     case "REMOVE_FROM_FAVORITES":
       return {
         ...state,
@@ -47,6 +91,7 @@ export const shoeReducer = (
           (item) => item.id !== action.payload.id
         ),
       };
+
     default:
       return state;
   }

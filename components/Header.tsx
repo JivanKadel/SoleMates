@@ -1,15 +1,20 @@
+"use client";
 import Image from "next/image.js";
 import LogoImage from "@/public/logo.svg";
 import Link from "next/link.js";
+import { useContext } from "react";
+import { CartDrawerContext } from "@/contexts/DrawerContext";
 
 export default function Header() {
+  const { isOpen, toggleOpen } = useContext(CartDrawerContext);
+
   type PageLink = { id: number; linkText: string; linkTo: string };
 
   const pageLinks: PageLink[] = [
-    { id: 1, linkText: "men", linkTo: "/men" },
-    { id: 2, linkText: "women", linkTo: "/women" },
-    { id: 3, linkText: "kids", linkTo: "/kids" },
-    { id: 4, linkText: "new arrivals", linkTo: "/new-arrivals" },
+    { id: 1, linkText: "men", linkTo: "/explore?men" },
+    { id: 2, linkText: "women", linkTo: "/explore?women" },
+    { id: 3, linkText: "kids", linkTo: "/explore?kids" },
+    { id: 4, linkText: "new arrivals", linkTo: "/explore?new-arrivals" },
   ];
 
   return (
@@ -63,12 +68,12 @@ export default function Header() {
             >
               <span className="material-symbols-outlined ">favorite</span>
             </Link>
-            <Link
-              href={"/"}
+            <button
+              onClick={toggleOpen}
               className="h-10! w-10! bg-gray-100 flex flex-col justify-center items-center rounded-sm hover:border-2 hover:border-gray-300"
             >
               <span className="material-symbols-outlined ">shopping_bag</span>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
