@@ -2,13 +2,22 @@
 import Image from "next/image.js";
 import LogoImage from "@/public/logo.svg";
 import Link from "next/link.js";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartDrawerContext } from "@/contexts/DrawerContext";
-import { useShoeContext } from "@/contexts/ShoeContext";
+import { CartItem, useShoeContext } from "@/contexts/ShoeContext";
 
 export default function Header() {
   const { toggleOpen } = useContext(CartDrawerContext);
+  const [totalInCart, setTotalInCart] = useState(0);
   const { state } = useShoeContext();
+
+  useEffect(() => {
+    const total = state.cartItems.reduce(
+      (acc: number, item: CartItem) => acc + item.quantity,
+      0
+    );
+    setTotalInCart(total);
+  }, [state.cartItems]);
 
   type PageLink = { id: number; linkText: string; linkTo: string };
 
@@ -72,9 +81,16 @@ export default function Header() {
             </Link>
             <button
               onClick={toggleOpen}
-              className="h-10! w-10! bg-gray-100 flex flex-col justify-center items-center rounded-sm hover:border-2 hover:border-gray-300"
+              className="relative h-10! w-10! bg-gray-100 flex flex-col justify-center items-center rounded-sm hover:border-2 hover:border-gray-300"
             >
               <span className="material-symbols-outlined ">shopping_bag</span>
+              {totalInCart > 0 ? (
+                <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-5 h-5 text-[10px] font-bold rounded-full border border-red-500 flex items-center justify-center text-red-600 bg-white">
+                  {totalInCart}
+                </span>
+              ) : (
+                ""
+              )}
             </button>
           </div>
         </div>

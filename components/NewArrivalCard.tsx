@@ -3,11 +3,14 @@ import { useShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
 import Image from "next/image.js";
 import Link from "next/link.js";
+import { useState } from "react";
+import Toast from "./Toast";
 
 type ShoeProps = {
   shoe: Shoe;
 };
 export default function NewArrivalCard({ shoe }: ShoeProps) {
+  const [showToast, setShowToast] = useState(false);
   const { dispatch } = useShoeContext();
 
   return (
@@ -39,12 +42,22 @@ export default function NewArrivalCard({ shoe }: ShoeProps) {
               type: "ADD_TO_CART",
               payload: shoe,
             });
+            setShowToast(true);
           }}
           className="bg-accent/10 text-accent font-bold font-mono p-2 cursor-pointer rounded-md hover:bg-accent/20 hover:rounded-lg transition-all"
         >
           Add to Cart
         </button>
       </div>
+      {showToast ? (
+        <Toast
+          title="Added to Cart"
+          type="success"
+          onClose={() => setShowToast(false)}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import AddToCartBtn from "@/components/AddToCartBtn";
+import AddToFavorites from "@/components/AddToFavorites";
 import SizeFilters from "@/components/SizeFilters";
 import { getShoeById } from "@/utils/dataFilter";
 import Image from "next/image";
@@ -177,9 +178,7 @@ export default async function ShoePage({ params }: { params: { id: string } }) {
             </div>
             <div className="flex items-end gap-4">
               <AddToCartBtn shoe={shoe} />
-              <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-accent text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-4">
-                <span className="material-symbols-outlined">favorite</span>
-              </button>
+              <AddToFavorites />
             </div>
             <div className="border-t border-gray-200 dark:border-gray-800 pt-6">
               <div className="flex border-b border-gray-200 dark:border-gray-800">
