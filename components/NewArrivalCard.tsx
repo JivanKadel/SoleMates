@@ -1,11 +1,16 @@
+"use client";
+import { ShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
 import Image from "next/image.js";
 import Link from "next/link.js";
+import { useContext } from "react";
 
 type ShoeProps = {
   shoe: Shoe;
 };
 export default function NewArrivalCard({ shoe }: ShoeProps) {
+  const { dispatch } = useContext(ShoeContext);
+
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-background-light dark:bg-background-dark border border-black/10 dark:border-white/10 min-w-64 transition-shadow hover:shadow-xl">
       <Link
@@ -29,7 +34,15 @@ export default function NewArrivalCard({ shoe }: ShoeProps) {
           </Link>
           <p className="text-muted text-sm">Rs. {shoe.price}</p>
         </div>
-        <button className="bg-accent/10 text-accent font-bold font-mono p-2 cursor-pointer rounded-md hover:bg-accent/20 hover:rounded-lg transition-all">
+        <button
+          onClick={() => {
+            dispatch({
+              type: "ADD_TO_CART",
+              payload: shoe,
+            });
+          }}
+          className="bg-accent/10 text-accent font-bold font-mono p-2 cursor-pointer rounded-md hover:bg-accent/20 hover:rounded-lg transition-all"
+        >
           Add to Cart
         </button>
       </div>

@@ -1,13 +1,13 @@
-import { Shoe } from "@/data/shoes";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CartItem as CartItemType,
   useShoeContext,
 } from "@/contexts/ShoeContext";
 import CartItem from "./CartItem";
+import ItemsNotFound from "./ItemsNotFound";
 
 export default function CartItemList() {
-  const { state, dispatch } = useShoeContext();
+  const { state } = useShoeContext();
   const {
     cartItems,
   }: {
@@ -42,17 +42,21 @@ export default function CartItemList() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 overflow-y-auto p-2">
-        <div className="flex flex-col divide-y divide-gray-200 dark:divide-gray-800">
-          {cartItems && cartItems?.length > 0 ? (
-            cartItems?.map((item) => (
-              <CartItem key={item.shoe.id} shoe={item.shoe} />
-            ))
-          ) : (
-            <h1>Nothing in Cart Yet</h1>
-          )}
+      {cartItems && cartItems.length > 0 ? (
+        <div className="flex-1 min-h-0 overflow-y-auto p-2">
+          <div className="flex-1 flex flex-col divide-y divide-gray-200 dark:divide-gray-800">
+            {cartItems &&
+              cartItems?.length > 0 &&
+              cartItems?.map((item) => (
+                <CartItem key={item.shoe.id} shoe={item.shoe} />
+              ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex-1 flex items-center justify-center p-4">
+          <ItemsNotFound />
+        </div>
+      )}
 
       <div className="p-6 border-t border-gray-200 dark:border-gray-800 bg-background-light dark:bg-background-dark shrink-0">
         <div className="flex flex-col gap-4">

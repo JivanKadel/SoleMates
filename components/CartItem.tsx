@@ -1,6 +1,11 @@
+import { ShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
+import { useContext } from "react";
+import type { CartItem as CartItemType } from "@/contexts/ShoeContext";
 
 export default function CartItem({ shoe }: { shoe: Shoe }) {
+  const { state } = useContext(ShoeContext);
+
   return (
     <div className="flex gap-4 p-4 justify-between items-center">
       <div className="flex items-start gap-4">
@@ -19,7 +24,7 @@ export default function CartItem({ shoe }: { shoe: Shoe }) {
             Rs. {shoe.price}
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Size: 9, Color: Black
+            Size: 9, Color: {shoe.colors[0]}
           </p>
         </div>
       </div>
@@ -31,7 +36,12 @@ export default function CartItem({ shoe }: { shoe: Shoe }) {
           <input
             className="text-base font-medium leading-normal w-5 p-0 text-center bg-transparent focus:outline-none focus:ring-0 border-none [appearance:textfield] [&amp;::-webkit-inner-spin-button]:appearance-none [&amp;::-webkit-outer-spin-button]:appearance-none"
             type="number"
-            value="1"
+            value={
+              state?.cartItems?.find((item: CartItemType) => {
+                return item.shoe.id === shoe.id;
+              })?.quantity
+            }
+            readOnly
           />
           <button className="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
             +

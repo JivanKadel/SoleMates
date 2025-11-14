@@ -1,10 +1,14 @@
+"use client";
+import { ShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 export default function ProductCard({ shoe }: { shoe: Shoe }) {
   const ratingString = `${shoe.rating}`;
   const salesString = `${shoe.totalSales}`;
+
+  const { state, dispatch } = useContext(ShoeContext);
 
   return (
     <div className="flex flex-col">
@@ -17,6 +21,12 @@ export default function ProductCard({ shoe }: { shoe: Shoe }) {
           aria-label={shoe.name}
         />
         <button
+          onClick={() => {
+            dispatch({
+              type: "ADD_TO_CART",
+              payload: shoe,
+            });
+          }}
           className="cursor-pointer absolute bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] flex items-center justify-center h-10 px-4 bg-white/80 dark:bg-black/70 backdrop-blur-sm text-text-light dark:text-text-dark text-sm font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           aria-label={`Add ${shoe.name} to cart`}
           type="button"

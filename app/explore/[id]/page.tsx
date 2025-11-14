@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default async function ShoePage({ params }: { params: { id: string } }) {
   const { id } = await params;
-  console.log(id);
+  // console.log(id);
   const shoe = await getShoeById(id);
 
   if (!shoe) {
