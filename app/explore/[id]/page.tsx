@@ -1,3 +1,4 @@
+import AddToCartBtn from "@/components/AddToCartBtn";
 import SizeFilters from "@/components/SizeFilters";
 import { getShoeById } from "@/utils/dataFilter";
 import Image from "next/image";
@@ -134,19 +135,19 @@ export default async function ShoePage({ params }: { params: { id: string } }) {
               </p>
               <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-1">
-                  <span className="material-symbols-outlined text-yellow-500 !text-[18px]">
+                  <span className="material-symbols-outlined text-yellow-500 text-[18px]!">
                     star
                   </span>
-                  <span className="material-symbols-outlined text-yellow-500 !text-[18px]">
+                  <span className="material-symbols-outlined text-yellow-500 text-[18px]!">
                     star
                   </span>
-                  <span className="material-symbols-outlined text-yellow-500 !text-[18px]">
+                  <span className="material-symbols-outlined text-yellow-500 text-[18px]!">
                     star
                   </span>
-                  <span className="material-symbols-outlined text-yellow-500 !text-[18px]">
+                  <span className="material-symbols-outlined text-yellow-500 text-[18px]!">
                     star
                   </span>
-                  <span className="material-symbols-outlined text-yellow-500 !text-[18px]">
+                  <span className="material-symbols-outlined text-yellow-500 text-[18px]!">
                     star_half
                   </span>
                   <span className="ml-1 font-medium text-gray-800 dark:text-gray-200">
@@ -175,9 +176,7 @@ export default async function ShoePage({ params }: { params: { id: string } }) {
               </div>
             </div>
             <div className="flex items-end gap-4">
-              <button className="w-full flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-accent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-6">
-                <span>Add to Cart</span>
-              </button>
+              <AddToCartBtn shoe={shoe} />
               <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-accent text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-4">
                 <span className="material-symbols-outlined">favorite</span>
               </button>
