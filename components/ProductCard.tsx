@@ -2,12 +2,15 @@
 import { useShoeContext } from "@/contexts/ShoeContext";
 import { Shoe } from "@/data/shoes";
 import Link from "next/link";
+import { useState } from "react";
+import Toast from "./Toast";
 
 export default function ProductCard({ shoe }: { shoe: Shoe }) {
   const ratingString = `${shoe.rating}`;
   const salesString = `${shoe.totalSales}`;
 
   const { dispatch } = useShoeContext();
+  const [showToast, setShowToast] = useState(false);
 
   return (
     <div className="flex flex-col">
@@ -25,6 +28,7 @@ export default function ProductCard({ shoe }: { shoe: Shoe }) {
               type: "ADD_TO_CART",
               payload: shoe,
             });
+            setShowToast(true);
           }}
           className="cursor-pointer absolute bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] flex items-center justify-center h-10 px-4 bg-white/80 dark:bg-black/70 backdrop-blur-sm text-text-light dark:text-text-dark text-sm font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           aria-label={`Add ${shoe.name} to cart`}
@@ -57,6 +61,13 @@ export default function ProductCard({ shoe }: { shoe: Shoe }) {
             {ratingString} ({salesString} sold)
           </p>
         </div>
+        {showToast && (
+          <Toast
+            title="Added to Cart"
+            type="success"
+            onClose={() => setShowToast(false)}
+          />
+        )}
       </div>
     </div>
   );

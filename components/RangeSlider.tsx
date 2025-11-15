@@ -1,51 +1,62 @@
-"use state";
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 
-export default function RangeSlider({
-  onMinimumChange,
-  onMaximumChange,
-}: {
+interface RangeSliderProps {
+  min: number; // actual min value (0–5000)
+  max: number; // actual max value (5000–10000)
   onMinimumChange: (minVal: number) => void;
   onMaximumChange: (maxVal: number) => void;
-}) {
-  const [minimum, setMinimum] = useState(1);
-  const [maximum, setMaximum] = useState(10000);
+}
+
+export default function RangeSlider({
+  min,
+  max,
+  onMinimumChange,
+  onMaximumChange,
+}: RangeSliderProps) {
+  // internal state for the sliders
+  const [minimum, setMinimum] = useState(min); // 0–5000
+  const [maximum, setMaximum] = useState(max - 5000); // 0–5000 internally
+
+  // update state when props change
+  useEffect(() => {
+    setMinimum(min);
+  }, [min]);
+
+  useEffect(() => {
+    setMaximum(max - 5000);
+  }, [max]);
 
   return (
-    <div className="flex flex-row gap-[-2]">
+    <div className="flex flex-row gap-0">
+      {/* Minimum slider */}
       <input
         type="range"
-        name="minimum"
         value={minimum}
         min={0}
         max={5000}
         step={100}
-        onChange={(event) => {
-          const minVal = parseInt(event.target.value);
-          setMinimum(minVal);
-          onMinimumChange(minVal);
+        onChange={(e) => {
+          const val = parseInt(e.target.value);
+          setMinimum(val);
+          onMinimumChange(val); // actual value
         }}
-        style={{
-          width: "50%",
-          maxWidth: "200px",
-        }}
+        style={{ width: "50%", maxWidth: "200px" }}
       />
+
+      {/* Maximum slider */}
       <input
         type="range"
-        name="maximum"
+        value={maximum}
         min={0}
         max={5000}
         step={100}
-        value={maximum}
-        onChange={(event) => {
-          const maxVal = parseInt(event.target.value);
-          setMaximum(maxVal);
-          onMaximumChange(maxVal);
+        onChange={(e) => {
+          const val = parseInt(e.target.value);
+          setMaximum(val);
+          onMaximumChange(val + 5000); // add 5000 to get actual max
         }}
-        style={{
-          width: "50%",
-          maxWidth: "200px",
-        }}
+        style={{ width: "50%", maxWidth: "200px" }}
       />
     </div>
   );

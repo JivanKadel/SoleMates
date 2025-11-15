@@ -1,25 +1,61 @@
 "use client";
-import { filterOptions } from "@/data/shoes";
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import RangeSlider from "./RangeSlider";
 import SizeFilters from "./SizeFilters";
 
 export default function Filters() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [gender, setGender] = useState<string | null>(null); // only one gender
   const [range, setRange] = useState<{ min: number; max: number }>({
     min: 1000,
     max: 8000,
   });
+  const [sizes, setSizes] = useState<number[]>([]); // SizeFilters
 
   useEffect(() => {
-    console.log(range.min, range.max);
-  }, [range]);
+    const gendersParam = searchParams.get("gender");
+    if (gendersParam) setGender(gendersParam.toLowerCase());
+    else setGender(null);
 
-  const onMinimumChange = (value: number) => {
-    setRange((prev) => ({ ...prev, min: value }));
+    const minPrice = Number(searchParams.get("minPrice") ?? 1000);
+    const maxPrice = Number(searchParams.get("maxPrice") ?? 8000);
+    setRange({ min: minPrice, max: maxPrice });
+
+    const sizesParam = searchParams.get("size");
+    if (sizesParam) setSizes(sizesParam.split(",").map(Number));
+    else setSizes([]);
+  }, [searchParams]);
+
+  const toggleGender = (g: string) => {
+    setGender((prev) => (prev === g ? null : g)); // select or unselect
   };
 
-  const onMaximumChange = (value: number) => {
-    setRange((prev) => ({ ...prev, max: value + 5000 }));
+  const applyFilters = () => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    // Gender
+    if (gender) params.set("gender", gender);
+    else params.delete("gender");
+
+    // Sizes
+    if (sizes.length) params.set("size", sizes.join(","));
+    else params.delete("size");
+
+    // Price
+    params.set("minPrice", range.min.toString());
+    params.set("maxPrice", range.max.toString());
+
+    router.push(`/explore?${params.toString()}`);
+  };
+
+  const clearAll = () => {
+    setGender(null);
+    setSizes([]);
+    setRange({ min: 1000, max: 8000 });
+    router.push(`/explore`);
   };
 
   return (
@@ -31,49 +67,62 @@ export default function Filters() {
             Refine your Search
           </p>
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <h3 className="font-semibold text-sm">Gender</h3>
-            <div className="flex flex-col gap-2 pl-2">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input type="checkbox" />
-                <span>Women</span>
+
+        {/* Gender */}
+        <div className="flex flex-col gap-2">
+          <h3 className="font-semibold text-sm">Gender</h3>
+          <div className="flex flex-col gap-2 pl-2">
+            {["Women", "Men", "Unisex"].map((g) => (
+              <label
+                key={g}
+                className="flex items-center gap-2 cursor-pointer select-none"
+              >
+                <input
+                  type="checkbox"
+                  checked={gender === g.toLowerCase()}
+                  onChange={() => toggleGender(g.toLowerCase())}
+                />
+                <span>{g}</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input type="checkbox" />
-                <span>Men</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input type="checkbox" />
-                <span>Unisex</span>
-              </label>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h3 className="font-semibold text-sm">
-              Size (US) <span>{}</span>
-            </h3>
-            <div className="grid grid-cols-4 gap-2 text-center">
-              <SizeFilters />
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h3 className="font-semibold text-sm">Price Range</h3>
-            <RangeSlider
-              onMinimumChange={onMinimumChange}
-              onMaximumChange={onMaximumChange}
-            />
-            <div className="flex justify-between text-xs text-muted w-full max-w-[300px]">
-              <span>$50</span>
-              <span>$250</span>
-            </div>
+            ))}
           </div>
         </div>
+
+        {/* Size */}
+        <div className="flex flex-col gap-3">
+          <h3 className="font-semibold text-sm">Size (US)</h3>
+          <div className="grid grid-cols-4 gap-2 text-center">
+            <SizeFilters selectedSizes={sizes} setSelectedSizes={setSizes} />
+          </div>
+        </div>
+
+        {/* Price Range */}
+        <div className="flex flex-col gap-3">
+          <h3 className="font-semibold text-sm">Price Range</h3>
+          <RangeSlider
+            min={range.min}
+            max={range.max}
+            onMinimumChange={(val) => setRange((p) => ({ ...p, min: val }))}
+            onMaximumChange={(val) => setRange((p) => ({ ...p, max: val }))}
+          />
+          <div className="flex justify-between text-xs text-muted w-full max-w-[300px]">
+            <span>Rs. {range.min}</span>
+            <span>Rs. {range.max}</span>
+          </div>
+        </div>
+
+        {/* Buttons */}
         <div className="flex flex-col justify-center items-center gap-2 mt-4">
-          <button className="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent hover:bg-accent/90 text-white text-sm font-bold leading-normal tracking-[0.015em]">
+          <button
+            onClick={applyFilters}
+            className="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent hover:bg-accent/90 text-white text-sm font-bold leading-normal tracking-[0.015em]"
+          >
             Apply Filters
           </button>
-          <button className="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-foreground  hover:bg-black/10 dark:hover:bg-white/10 text-sm font-bold leading-normal tracking-[0.015em]">
+          <button
+            onClick={clearAll}
+            className="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-foreground hover:bg-black/10 dark:hover:bg-white/10 text-sm font-bold leading-normal tracking-[0.015em]"
+          >
             Clear All
           </button>
         </div>

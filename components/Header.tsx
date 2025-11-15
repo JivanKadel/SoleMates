@@ -22,10 +22,10 @@ export default function Header() {
   type PageLink = { id: number; linkText: string; linkTo: string };
 
   const pageLinks: PageLink[] = [
-    { id: 1, linkText: "men", linkTo: "/explore?men" },
-    { id: 2, linkText: "women", linkTo: "/explore?women" },
-    { id: 3, linkText: "kids", linkTo: "/explore?kids" },
-    { id: 4, linkText: "new arrivals", linkTo: "/explore?new-arrivals" },
+    { id: 1, linkText: "men", linkTo: "/explore?gender=men" },
+    { id: 2, linkText: "women", linkTo: "/explore?gender=women" },
+    { id: 3, linkText: "kids", linkTo: "/explore?gender=all" },
+    { id: 4, linkText: "new arrivals", linkTo: "/explore?newArrivals=true" },
   ];
 
   return (
@@ -81,7 +81,7 @@ export default function Header() {
             </Link>
             <button
               onClick={toggleOpen}
-              className="relative h-10! w-10! bg-gray-100 flex flex-col justify-center items-center rounded-sm hover:border-2 hover:border-gray-300"
+              className="relative h-10! w-10! bg-gray-100 flex flex-col justify-center items-center cursor-pointer rounded-sm hover:border-2 hover:border-gray-300"
             >
               <span className="material-symbols-outlined ">shopping_bag</span>
               {totalInCart > 0 ? (
