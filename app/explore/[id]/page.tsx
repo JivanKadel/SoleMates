@@ -1,10 +1,11 @@
 import AddToCartBtn from "@/components/AddToCartBtn";
 import AddToFavorites from "@/components/AddToFavorites";
-import SizeFilters from "@/components/SizeFilters";
+import ShoeSizeButtonGrid from "@/components/ShoeSizeButtonGrid";
 import { getShoeById } from "@/utils/dataFilter";
 import Image from "next/image";
+import { PageProps } from "@/.next/types/app/explore/[id]/page";
 
-export default async function ShoePage({ params }: { params: { id: string } }) {
+export default async function ShoePage({ params }: PageProps) {
   const { id } = await params;
   // console.log(id);
   const shoe = await getShoeById(id);
@@ -132,7 +133,7 @@ export default async function ShoePage({ params }: { params: { id: string } }) {
                 {shoe.name}
               </h1>
               <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                {shoe.price}
+                Rs. {shoe.price}
               </p>
               <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-1">
@@ -169,10 +170,10 @@ export default async function ShoePage({ params }: { params: { id: string } }) {
                   className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-2"
                   htmlFor="size"
                 >
-                  Select Size
+                  Available Sizes
                 </label>
                 <div className="grid grid-cols-4 gap-2">
-                  <SizeFilters />
+                  <ShoeSizeButtonGrid shoe={shoe} />
                 </div>
               </div>
             </div>

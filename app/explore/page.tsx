@@ -13,8 +13,9 @@ import {
 } from "@/utils/dataFilter";
 import { FilterTab } from "@/components/FilterTab";
 import SortOptions from "@/components/SortOptions";
+import { PageProps } from "@/.next/types/app/explore/page";
 
-export default async function ExplorePage({ searchParams }) {
+export default async function ExplorePage({ searchParams }: PageProps) {
   const params = await searchParams;
 
   const gender = params.gender;
@@ -27,10 +28,14 @@ export default async function ExplorePage({ searchParams }) {
   const sort = params.sort ?? "";
   const asc = params.asc === "false" ? false : true;
 
-  // ---- filter logic ----
   let filteredShoes = shoes;
 
-  if (gender) filteredShoes = filterShoesByGender(filteredShoes, gender);
+  if (gender) {
+    filteredShoes = filterShoesByGender(
+      filteredShoes,
+      gender as "male" | "female" | "unisex" | "all" | undefined | null
+    );
+  }
   if (newArrivals) filteredShoes = filterNewArrivals(filteredShoes);
   if (tags.length > 0) filteredShoes = filterShoesByTags(filteredShoes, tags);
   if (size) filteredShoes = filterShoesBySize(filteredShoes, size);

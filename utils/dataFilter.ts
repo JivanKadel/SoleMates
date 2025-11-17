@@ -61,7 +61,7 @@ export function filterShoesByPopularity(shoesList: Shoe[]): Shoe[] {
 
 export function filterShoesByGender(
   shoesList: Shoe[],
-  gender: "male" | "female" | "unisex" | "all" = "unisex"
+  gender: "male" | "female" | "unisex" | "all" | undefined | null = "unisex"
 ): Shoe[] {
   if (gender === "all" || gender === null || gender == undefined)
     return [...shoesList];
